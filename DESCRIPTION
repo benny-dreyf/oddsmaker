@@ -1,11 +1,10 @@
 Package: oddsmaker
 Type: Package
-Title: What the Package Does (Title Case)
+Title: The foundation for a 'data-informed' approach to winning your NFL 'Super Contest'
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Ben Dreyfuss
+Maintainer: Ben Dreyfuss <bendreyfuss@fastmail.com>
+Description: Pull odds and odds consensus data from oddsshark.com along with final game scores from pro-football-reference.com to build a model to predict spreads.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
