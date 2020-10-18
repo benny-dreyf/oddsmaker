@@ -28,10 +28,10 @@ odds<- function(week_num, num_games){
 
   data_pull %>%
     dplyr::select(team= X2, spread_share= X3, spread= X4, spread_payout= X5,
-                  over_under= X6, ou_share=X7, o_u_payout=X8) %>%
+                  ou= X6, ou_share=X7, ou_payout=X8) %>%
     dplyr::mutate(spread_share= as.numeric(stringr::str_replace(spread_share, '%', ""))/100,
                   ou_share= as.numeric(stringr::str_replace(ou_share, '%', ""))/100,
-                  over_under= as.numeric(stringr::str_replace(over_under, 'O/U', "")),
+                  ou= as.numeric(stringr::str_replace(ou, 'O/U', "")),
                   date_pulled= lubridate::today(tzone = 'EST')) %>%
     dplyr::mutate(game_num= as.numeric(seq(from= 1, to= NROW(data_pull)))) %>%
     dplyr::mutate(home_away= dplyr::case_when(game_num %% 2 == 0 ~ 'home', TRUE ~ 'away'),
@@ -42,10 +42,8 @@ odds<- function(week_num, num_games){
                   week= paste('Week', week_num, sep = " "),
                   spread_payout = dplyr::case_when(as.double(spread_payout) > 0 ~ as.double(spread_payout) * -1,
                                                    TRUE ~ as.double(spread_payout)),
-                  o_u_payout = dplyr::case_when(as.double(o_u_payout) > 0 ~ as.double(o_u_payout) * -1,
-                                                TRUE ~ as.double(o_u_payout)),
-                  o_u_payout = dplyr::case_when(as.double(o_u_payout) > 0 ~ as.double(o_u_payout) * -1,
-                                                TRUE ~ as.double(o_u_payout))) %>%
+                  ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
+                                                TRUE ~ as.double(ou_payout))) %>%
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0)) %>%
     dplyr::select(date_pulled, week, game_num, team, home_away, dplyr::everything())
 }
