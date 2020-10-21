@@ -22,10 +22,10 @@ odds<- function(week_num, num_games){
   for (i in seq_along(game_list[[1]])){
     tmp<- xml2::read_html('https://www.oddsshark.com/nfl/consensus-picks') %>%
       rvest::html_node(game_list[[1]][i]) %>%
-      rvest::html_table()
+      rvest::html_table() %>%
+      dplyr::mutate_all(as.character)
     data_pull<- dplyr::bind_rows(data_pull, tmp)
   }
-
   data_pull %>%
     dplyr::select(team= X2, spread_share= X3, spread= X4, spread_payout= X5,
                   ou= X6, ou_share=X7, ou_payout=X8) %>%
@@ -43,7 +43,8 @@ odds<- function(week_num, num_games){
                   spread_payout = dplyr::case_when(as.double(spread_payout) > 0 ~ as.double(spread_payout) * -1,
                                                    TRUE ~ as.double(spread_payout)),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
-                                                TRUE ~ as.double(ou_payout))) %>%
-    dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0)) %>%
-    dplyr::select(date_pulled, week, game_num, team, home_away, dplyr::everything())
+                                               TRUE ~ as.double(ou_payout))) %>%
+    dplyr::select(date_pulled, week, game_num, team, home_away, dplyr::everything()) %>%
+    dplyr::mutate_at(dplyr::vars(6:11), as.double) %>%
+    dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
 }
