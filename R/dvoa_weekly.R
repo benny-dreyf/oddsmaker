@@ -32,5 +32,7 @@ dvoa_weekly<-function(week_num, table_num){
     tibble::as_tibble() %>%
     dplyr::mutate_all(~stringr::str_replace(., '%', '')) %>%
     dplyr::mutate_at(dplyr::vars(dplyr::matches('dvoa|rank|week|dave|rk')), as.double) %>%
-    dplyr::mutate_at(dplyr::vars(dplyr::matches('dvoa|dave')), ~./100)
+    dplyr::mutate_at(dplyr::vars(dplyr::matches('dvoa|dave')), ~./100) %>%
+    dplyr::mutate(week= week_num) %>%
+    dplyr::select(week, dplyr::everything())
 }
