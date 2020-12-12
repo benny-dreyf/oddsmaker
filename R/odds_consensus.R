@@ -37,13 +37,14 @@ odds<- function(week_num, num_games){
     dplyr::mutate(home_away= dplyr::case_when(game_num %% 2 == 0 ~ 'home', TRUE ~ 'away'),
                   game_num= dplyr::case_when(game_num %% 2 == 0 ~ game_num/2, TRUE ~ game_num),
                   game_num= dplyr::case_when(game_num > dplyr::lead(game_num, n= 1) ~ dplyr::lead(game_num, n=1), TRUE ~ game_num),
-                  game_num= dplyr::case_when(lubridate::wday(Sys.Date()) > 5 ~ game_num + 1,
+                  game_num= dplyr::case_when(lubridate::wday(Sys.Date()) > 4 ~ game_num + 1,
                                              T ~ game_num),
                   week= paste('Week', week_num, sep = " "),
                   spread_payout = dplyr::case_when(as.double(spread_payout) > 0 ~ as.double(spread_payout) * -1,
                                                    TRUE ~ as.double(spread_payout)),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
-                                               TRUE ~ as.double(ou_payout))) %>%
+                                               TRUE ~ as.double(ou_payout)),
+                  team= str_extract(team, '^([A-Z]{3}|[A-Z]{2})')) %>%
     dplyr::select(date_pulled, week, game_num, team, home_away, dplyr::everything()) %>%
     dplyr::mutate_at(dplyr::vars(6:11), as.double) %>%
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
