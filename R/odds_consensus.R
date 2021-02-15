@@ -27,10 +27,11 @@ odds<- function(week_num, num_games){
     dplyr::bind_rows(.id = 'game_num') %>%
     dplyr::select(game_num, team= X2, spread_share= X3, spread= X4, spread_payout= X5,
                   ou= X6, ou_share= X7, ou_payout= X8) %>%
+    tibble::rowid_to_column() %>%
     dplyr::mutate(date_pulled= lubridate::today(tzone = 'EST'),
                   team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'),
                   game_num= as.numeric(game_num),
-                  home_away= dplyr::case_when(game_num %% 2 == 0 ~ 'home', TRUE ~ 'away'),
+                  home_away= dplyr::case_when(rowid %% 2 == 0 ~ 'home', TRUE ~ 'away'),
                   week= paste('Week', week_num, sep = " "),
                   spread_share= as.numeric(stringr::str_replace(spread_share, '%', ""))/100,
                   spread_payout = dplyr::case_when(as.double(spread_payout) > 0 ~ as.double(spread_payout) * -1,
@@ -39,8 +40,12 @@ odds<- function(week_num, num_games){
                   ou= as.numeric(stringr::str_replace(ou, 'O/U', "")),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
                                                TRUE ~ as.double(ou_payout))) %>%
+    dplyr::select(-rowid) %>%
     dplyr::select(date_pulled, week, game_num, team, home_away, dplyr::everything()) %>%
     dplyr::mutate_at(dplyr::vars(6:11), as.double) %>%
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
   return(final_table)
 }
+
+
+
