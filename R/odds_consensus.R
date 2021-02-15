@@ -11,7 +11,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #'
-odds<- function(week_num, num_games){
+odds_consensus<- function(week_num, num_games){
   games<- c(2:(num_games+1))
   url_list<- purrr::map(.x= '', paste, '#block-system-main > div > div:nth-child(', games, ') > table',
                         sep = "")
