@@ -29,7 +29,7 @@ gridiron_all<-function(dat){
                      panel.grid.major.y= element_line(color= 'grey'),
                      panel.grid.major.x= element_blank(),
                      legend.key = element_rect(fill = "white")) +
-      ggplot2::labs(title= 'Oddsshark % Share of Bet Volume', subtitle= unique(d[3]), x= 'Odds Refresh #', y= '% Share of Bet Volume') +
+      ggplot2::labs(title= 'Oddsshark % Share of Bet Volume & Points', subtitle= unique(d[3]), x= 'Oddsshark Site Scrape #', y= '% Share of Bet Volume') +
       ggplot2::scale_x_continuous(breaks= seq(min(d$id), max(d$id), 1)) +
       ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(.15,.85), labels =  scales::label_percent(accuracy= 1)) +
       scale_color_manual(values = colors_list)
