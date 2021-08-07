@@ -28,7 +28,7 @@ odds_consensus<- function(week_num, num_games){
     dplyr::mutate_all(.funs = as.character) %>%
     separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') %>%
     # mutate('O/U Consensus'= str_remove('O/U Consensus', '^[OU] ')) %>%
-    separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') %>%
+    tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') %>%
     dplyr::select(game_num, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') %>%
     tibble::rowid_to_column() %>%
     dplyr::mutate(date_pulled= lubridate::today(tzone = 'EST'),
@@ -40,7 +40,7 @@ odds_consensus<- function(week_num, num_games){
                   spread_payout = dplyr::case_when(as.double(spread_payout) > 0 ~ as.double(spread_payout) * -1,
                                                    TRUE ~ as.double(spread_payout)),
                   ou_share= as.numeric(stringr::str_replace(ou_share, '%', ""))/100,
-                  ou= case_when(str_detect(ou, 'U') ~ 'Under',
+                  ou= dplyr::case_when(stringr::str_detect(ou, 'U') ~ 'Under',
                                 T ~ 'Over'),
                   spread= as.numeric(spread),
                   ou_target= as.numeric(ou_target),
