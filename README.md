@@ -1,4 +1,4 @@
-## Oddsmaker: Using Data to Inform Your Weekly Picks
+# Oddsmaker: Using Data to Inform Your Weekly Picks
 
 This is a tool to use public betting consensus to help inform your pick selections. 
 
@@ -17,6 +17,7 @@ Technically, "the house always wins" always applies in sports betting because of
 To make this work, we first need to see the spread for any given game and track the share of bet volume on either side of the line, which the below script does:
 
 ![oddsmaker](/drepo/gambalo/oddsmaker.png)
+Format: [thing]!(https://github.com/benny-dreyf/gambalo/blob/master/oddsmaker.png)
 
 
 
