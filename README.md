@@ -15,7 +15,8 @@ Technically, "the house always wins" always applies in sports betting because of
 ### Line Movements & Trendspotting 
 
 To make this work, we first need to see the spread for any given game and track the share of bet volume on either side of the line, which the below script does:
-![oddsmaker](/Users/BenDreyfuss/drepo/gambalo/oddsmaker.png)
+
+![oddsmaker](/drepo/gambalo/oddsmaker.png)
 
 
 
