@@ -26,7 +26,7 @@ odds_consensus<- function(week_num, num_games){
     # purrr::map(dplyr::mutate_all, as.character) %>%
     dplyr::bind_rows(.id = 'game_num') %>%
     dplyr::mutate_all(.funs = as.character) %>%
-    separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') %>%
+    tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') %>%
     # mutate('O/U Consensus'= str_remove('O/U Consensus', '^[OU] ')) %>%
     tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') %>%
     dplyr::select(game_num, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') %>%
