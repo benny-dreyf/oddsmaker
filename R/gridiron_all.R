@@ -1,4 +1,4 @@
-#' After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
+#' After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. % share of bet volume for each team by game using this function
 #'
 #' @param dat dataframe or tibble containing public consensus share of bets and game line for multiples games for a given week pulled more than once by odds_consensus function from oddsmaker package
 #'
