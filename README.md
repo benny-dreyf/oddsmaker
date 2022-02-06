@@ -83,7 +83,7 @@ This can be done to showcase all games from a bigger week, see Week 17 below as 
 read_csv('week17_2021.csv') %>% 
   oddsmaker::gridiron_all()
 ```
-![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022_ou.png)
+![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/week17_2021.png)
 
   
   
