@@ -12,7 +12,7 @@ This is a tool to use public betting consensus to find the strongest opportuniti
 
 ###### Source: https://www.oddsshark.com/nfl/consensus-picks
 
-The NFL "Pick Consensus" page on oddsshark.com shows a single point-in-time 'snapshot' of where highest share of bets are going for any given game. 
+The NFL "Pick Consensus" page on <oddsshark.com> shows a single point-in-time 'snapshot' of where highest share of bets are going for any given game. 
 
 
 ![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl-2022_oddsshark.png)
