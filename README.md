@@ -4,7 +4,7 @@ This is a tool to use public betting consensus to find the strongest opportuniti
 
 ### What is public consensus and how can it be used?
 
-> From **Oddsshark.com:** "The NFL consensus is ... the percentage of the general public betting on each side of a matchup or total. You can bet with or against the public. When you bet against the public, it is called 'fading' the public." 
+> From the website **oddsshark.com:** "The NFL consensus is ... the percentage of the general public betting on each side of a matchup or total. You can bet with or against the public. When you bet against the public, it is called 'fading' the public." 
 
 "the house always wins" always applies in sports betting because of the vigorish, however, if we assume that the majority of the betting public is generally wrong, what can we use to better inform our picks?
   * Changes in the spread over-time
@@ -12,7 +12,7 @@ This is a tool to use public betting consensus to find the strongest opportuniti
 
 ###### Source: https://www.oddsshark.com/nfl/consensus-picks
 
-The NFL "Pick Consensus" page on <oddsshark.com> shows a single point-in-time 'snapshot' of where highest share of bets are going for any given game. 
+The NFL "Pick Consensus" page on [Oddsshark](http://oddsshark.com) shows a single point-in-time 'snapshot' of where highest share of bets are going for any given game. 
 
 
 ![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl-2022_oddsshark.png)
