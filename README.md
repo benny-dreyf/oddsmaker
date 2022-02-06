@@ -27,7 +27,7 @@ All of these are still observational but more data coudl help us make better dec
 
 ### How does it work?
 
-Each day (or multiple times a day), you first need to run the `oddsmaker` script, detailing the 'number of games (`num_games`) and 'week number' (`week_num`) on the NFL calendar. 
+Each day (or multiple times a day), you first need to run the `odds_consensus` script, detailing the 'number of games (`num_games`) and 'week number' (`week_num`) on the NFL calendar. 
 
 ```
 oddsshark<- oddsmaker::odds_consensus(week_num = 22, num_games = 1) 
