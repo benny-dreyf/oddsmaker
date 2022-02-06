@@ -3,6 +3,7 @@
 export(dvoa_weekly)
 export(gridiron_all)
 export(gridiron_game)
+export(gridiron_ou)
 export(odds_consensus)
 export(pfr_scores)
 importFrom(magrittr,"%>%")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/gridiron_all.R
 \name{gridiron_all}
 \alias{gridiron_all}
-\title{After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function}
+\title{After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. % share of bet volume for each team by game using this function}
 \usage{
 gridiron_all(dat)
 }
@@ -13,5 +13,5 @@ gridiron_all(dat)
 a patchwork plot showing all spread and spread_share for each game
 }
 \description{
-After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
+After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. % share of bet volume for each team by game using this function
 }
