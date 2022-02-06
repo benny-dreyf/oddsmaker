@@ -65,7 +65,7 @@ With data compiled in a single dataframe, we can now build a timeseries of our d
 oddsmaker::gridiron_all(week_22)
 ```
 
-![oddsshark super bowl 2022 consensus](/drepo/oddsmaker/super-bowl-2022_oddsshark.png)
+![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022.png)
 
 And we can do the same for the over-under:
 
@@ -73,4 +73,4 @@ And we can do the same for the over-under:
 oddsmaker::gridiron_ou(week_22)
 ```
 
-![oddsshark super bowl 2022 consensus](/drepo/oddsmaker/super-bowl-2022_oddsshark.png)
+![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022_ou.png)
