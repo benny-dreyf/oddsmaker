@@ -74,3 +74,16 @@ oddsmaker::gridiron_ou(week_22)
 ```
 
 ![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022_ou.png)
+
+(Note that the visual for the over/under needs some fine-tuning, such as the addition of team colors, and fixing the `subtitle` label, but the underlying data and how it is depicted is accurate.)
+
+This can be done to showcase all games from a bigger week, see Week 17 below as an example, using a final file of stored game data for that week:
+
+```
+read_csv('week17_2021.csv') %>% 
+  oddsmaker::gridiron_all()
+```
+![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022_ou.png)
+
+  
+  
