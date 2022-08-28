@@ -30,6 +30,6 @@ gridiron_game<- function(dat){
     ggplot2::labs(title= 'Oddsshark % Share of Bet Volume & Points', subtitle= unique(dat[3]), x= 'Oddsshark Site Scrape #', y= '% Share of Bet Volume') +
     ggplot2::scale_x_continuous(breaks= seq(min(dat$id), max(dat$id), 1)) +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(.15,.85), labels =  scales::label_percent(accuracy= 1)) +
-    scale_color_manual(values = colors_list)
+    ggplot2::scale_color_manual(values = colors_list)
   return(z)
 }
