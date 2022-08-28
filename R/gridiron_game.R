@@ -21,12 +21,12 @@ gridiron_game<- function(dat){
   z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= id, y= spread_share, color= team)) +
     ggplot2::geom_line() +
     ggplot2::geom_text(ggplot2::aes(label= spread), vjust= -1,  size= 3.5, show.legend = F) +
-    ggplot2::theme(panel.background = element_rect(fill= 'white'),
-                   title = element_text(size= 8),
-                   axis.text = element_text(size= 6),
-                   panel.grid.major.y= element_line(color= 'grey'),
-                   panel.grid.major.x= element_blank(),
-                   legend.key = element_rect(fill = "white")) +
+    ggplot2::theme(panel.background = ggplot2::element_rect(fill= 'white'),
+                   title = ggplot2::element_text(size= 8),
+                   axis.text = ggplot2::element_text(size= 6),
+                   panel.grid.major.y= ggplot2::element_line(color= 'grey'),
+                   panel.grid.major.x= ggplot2::element_blank(),
+                   legend.key = ggplot2::element_rect(fill = "white")) +
     ggplot2::labs(title= 'Oddsshark % Share of Bet Volume & Points', subtitle= unique(dat[3]), x= 'Oddsshark Site Scrape #', y= '% Share of Bet Volume') +
     ggplot2::scale_x_continuous(breaks= seq(min(dat$id), max(dat$id), 1)) +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(.15,.85), labels =  scales::label_percent(accuracy= 1)) +
