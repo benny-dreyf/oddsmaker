@@ -20,7 +20,7 @@ gridiron_game<- function(dat){
   colors_list<- colors_list[unique(dat$team)]
   z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= id, y= spread_share, color= team)) +
     ggplot2::geom_line() +
-    ggplot2::geom_text(aes(label= spread), vjust= -1,  size= 3.5, show.legend = F) +
+    ggplot2::geom_text(ggplot2::aes(label= spread), vjust= -1,  size= 3.5, show.legend = F) +
     ggplot2::theme(panel.background = element_rect(fill= 'white'),
                    title = element_text(size= 8),
                    axis.text = element_text(size= 6),
