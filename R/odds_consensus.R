@@ -13,7 +13,7 @@
 #'
 odds_consensus<- function(week_num, num_games){
   games<- c(1:(num_games))
-  url_list<- purrr::map(.x= '', paste, '#block-system-main > div > div.computer-picks.computer-picks-nfl > div > div.picks-table-wrap.picks-count-', games, ' > div.pick-table-content > table',
+  url_list<- purrr::map(.x= '', paste, 'body > div.dialog-off-canvas-main-canvas > div.layout-container > main > div.layout-content > div > article > div > div:nth-child(2) > div > div.block.block-oddsshark-data-blocks.block-consensus-block > div > div > div.picks-table-wrap.picks-count-', games, ' > div.pick-table-content > table',
                         sep = "")
   data_pull<- tibble::tibble()
   table_gather<- function(item){
@@ -40,7 +40,7 @@ odds_consensus<- function(week_num, num_games){
                                                    TRUE ~ as.double(spread_payout)),
                   ou_share= as.numeric(stringr::str_replace(ou_share, '%', ""))/100,
                   ou= dplyr::case_when(stringr::str_detect(ou, 'U') ~ 'Under',
-                                T ~ 'Over'),
+                                       T ~ 'Over'),
                   spread= as.numeric(spread),
                   ou_target= as.numeric(ou_target),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
