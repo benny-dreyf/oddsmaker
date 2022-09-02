@@ -7,10 +7,9 @@
 #' @example None
 #'
 #' @export
-#' @importFrom magrittr %>%
 #'
 gridiron_ou<-function(dat){
-  dat<- dat %>% dplyr::mutate(id= as.numeric(id), team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'))
+  dat<- dat |> dplyr::mutate(id= as.numeric(id), team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'))
   # ou_colors<- c('Over' = 'blue', 'Under' = 'red')
   # ou_colors<- ou_colors[unique(dat$ou)]
   p<- function(d){

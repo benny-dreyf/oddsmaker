@@ -7,7 +7,6 @@
 #' @example None
 #'
 #' @export
-#' @importFrom magrittr %>%
 #'
 gridiron_game<- function(dat){
   colors_list<- c('ARI' = '#97233F', 'ATL' = '#A71930', 'BAL' = '#241773', 'BUF' = '#00338D', 'CAR' = '#0085CA',
@@ -19,7 +18,7 @@ gridiron_game<- function(dat){
                   'TEN' = '#4095D1', 'WAS' = '#773141')
   colors_list<- colors_list[unique(dat$team)]
   z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= id, y= spread_share, color= team, group= team)) +
-    ggplot2::geom_line(size = 1.5) +
+    ggplot2::geom_line() +
     ggplot2::geom_text(ggplot2::aes(label= spread), vjust= -1,  size= 3.5, show.legend = F) +
     ggplot2::theme(panel.background = ggplot2::element_rect(fill= 'white'),
                    title = ggplot2::element_text(size= 11, face = 'bold'),
