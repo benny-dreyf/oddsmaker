@@ -18,18 +18,19 @@ gridiron_game<- function(dat){
                   'PHI' = '#004C54', 'PIT' = '#FFC20E', 'SEA' = '#7AC142','SF' = '#C9243F', 'TB' = '#FF7900',
                   'TEN' = '#4095D1', 'WAS' = '#773141')
   colors_list<- colors_list[unique(dat$team)]
-  z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= id, y= spread_share, color= team)) +
-    ggplot2::geom_line() +
+  z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= id, y= spread_share, color= team, group= team)) +
+    ggplot2::geom_line(size = 1.5) +
     ggplot2::geom_text(ggplot2::aes(label= spread), vjust= -1,  size= 3.5, show.legend = F) +
     ggplot2::theme(panel.background = ggplot2::element_rect(fill= 'white'),
-                   title = ggplot2::element_text(size= 8),
-                   axis.text = ggplot2::element_text(size= 6),
+                   title = ggplot2::element_text(size= 11, face = 'bold'),
+                   axis.text = ggplot2::element_text(size= 10, colour = 'black'),
+                   axis.title = ggplot2::element_text(size = 10),
                    panel.grid.major.y= ggplot2::element_line(color= 'grey'),
                    panel.grid.major.x= ggplot2::element_blank(),
                    legend.key = ggplot2::element_rect(fill = "white")) +
-    ggplot2::labs(title= 'Oddsshark % Share of Bet Volume & Points', subtitle= unique(dat[3]), x= 'Oddsshark Site Scrape #', y= '% Share of Bet Volume') +
-    ggplot2::scale_x_continuous(breaks= seq(min(dat$id), max(dat$id), 1)) +
-    ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(.15,.85), labels =  scales::label_percent(accuracy= 1)) +
+    ggplot2::labs(title= 'Oddsshark % Share of Bet Volume & Points', subtitle= unique(dat[3]), x= 'Oddsshark Site Scrape #', y= '% Share of Bet Volume', color= 'Team') +
+    ggplot2::scale_x_discrete(breaks= seq(min(dat$id), max(dat$id), 1)) +
+    ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(0,1), labels =  scales::label_percent(accuracy= 1)) +
     ggplot2::scale_color_manual(values = colors_list)
   return(z)
 }

@@ -9,7 +9,6 @@
 #' @example None
 #'
 #' @export
-#' @importFrom magrittr %>%
 #'
 odds_consensus<- function(week_num, num_games){
   games<- c(1:(num_games))
@@ -17,19 +16,19 @@ odds_consensus<- function(week_num, num_games){
                         sep = "")
   data_pull<- tibble::tibble()
   table_gather<- function(item){
-    xml2::read_html('https://www.oddsshark.com/nfl/consensus-picks') %>%
-      rvest::html_node(item) %>%
+    xml2::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
+      rvest::html_node(item) |>
       rvest::html_table()
   }
-  final_table<- url_list[[1]] %>%
-    purrr::map(.f = table_gather) %>%
-    # purrr::map(dplyr::mutate_all, as.character) %>%
-    dplyr::bind_rows(.id = 'game_num') %>%
-    dplyr::mutate_all(.funs = as.character) %>%
-    tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') %>%
-    tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') %>%
-    dplyr::select(game_num, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') %>%
-    tibble::rowid_to_column() %>%
+  final_table<- url_list[[1]] |>
+    purrr::map(.f = table_gather) |>
+    # purrr::map(dplyr::mutate_all, as.character) |>
+    dplyr::bind_rows(.id = 'game_num') |>
+    dplyr::mutate_all(.funs = as.character) |>
+    tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') |>
+    tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') |>
+    dplyr::select(game_num, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') |>
+    tibble::rowid_to_column() |>
     dplyr::mutate(date_pulled= lubridate::today(tzone = 'EST'),
                   team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'),
                   game_num= as.numeric(game_num),
@@ -44,9 +43,9 @@ odds_consensus<- function(week_num, num_games){
                   spread= as.numeric(spread),
                   ou_target= as.numeric(ou_target),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
-                                               TRUE ~ as.double(ou_payout))) %>%
-    dplyr::select(-rowid) %>%
-    dplyr::select(date_pulled,week,  game_num, team, home_away, dplyr::everything()) %>%
+                                               TRUE ~ as.double(ou_payout))) |>
+    dplyr::select(-rowid) |>
+    dplyr::select(date_pulled,week,  game_num, team, home_away, dplyr::everything()) |>
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
   return(final_table)
 }
