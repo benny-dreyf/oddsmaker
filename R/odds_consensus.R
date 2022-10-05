@@ -12,7 +12,7 @@
 #'
 odds_consensus<- function(week_num, num_games){
   games<- c(1:(num_games))
-  url_list<- purrr::map(.x= '', paste, 'body > div.dialog-off-canvas-main-canvas > div.layout-container > main > div.layout-content > div > article > div > div:nth-child(2) > div > div.block.block-oddsshark-data-blocks.block-consensus-block > div > div > div.picks-table-wrap.picks-count-', games, ' > div.pick-table-content > table',
+  url_list<- purrr::map(.x= '', paste, "body > div.dialog-off-canvas-main-canvas > div.layout-container > main > div.layout-content > div > article > div > div:nth-child(1) > div > div.block.block-oddsshark-data-blocks.block-consensus-block > div > div > div.picks-table-wrap.picks-count-", games, " > div.pick-table-content > table",
                         sep = "")
   data_pull<- tibble::tibble()
   table_gather<- function(item){
