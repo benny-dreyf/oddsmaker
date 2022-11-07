@@ -1,4 +1,4 @@
-#' updated version of 
+#' updated version of odds_consensus, scraping oddsmaker 'public conensus picks' site
 #'
 #' @param NULL
 #'
@@ -8,14 +8,14 @@
 #'
 #' @export
 picks_consensus<-function(){
-  shark_con<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |> 
-    rvest::html_elements('table') |> 
-    rvest::html_table() |> 
-    bind_rows(.id= 'game_num') |> 
+  shark_con<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
+    rvest::html_elements('table') |>
+    rvest::html_table() |>
+    bind_rows(.id= 'game_num') |>
     tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') |>
-    tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') |> 
+    tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') |>
     dplyr::select(game_num, matchup= `See Matchup`, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') |>
-    tibble::rowid_to_column() |> 
+    tibble::rowid_to_column() |>
     dplyr::mutate(date_pulled= lubridate::now(tzone = 'EST'),
                   team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'),
                   game_num= as.numeric(game_num),
@@ -29,18 +29,18 @@ picks_consensus<-function(){
                   spread= as.numeric(spread),
                   ou_target= as.numeric(ou_target),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
-                                               TRUE ~ as.double(ou_payout))) |> 
+                                               TRUE ~ as.double(ou_payout))) |>
     dplyr::select(-rowid) |>
     dplyr::select(date_pulled, matchup,  game_num, team, home_away, dplyr::everything()) |>
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
-  shark_times<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |> 
-    rvest::html_elements('div.pick-mobile-date') |> 
-    rvest::html_text() |> 
-    tibble::tibble() |> 
-    dplyr::group_by(row_number()) |> 
-    dplyr::group_split() |> 
-    purrr::map_df(.f = slice, rep(1, 2)) |> 
-    dplyr::rename(game_time= 1) |> 
+  shark_times<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
+    rvest::html_elements('div.pick-mobile-date') |>
+    rvest::html_text() |>
+    tibble::tibble() |>
+    dplyr::group_by(row_number()) |>
+    dplyr::group_split() |>
+    purrr::map_df(.f = slice, rep(1, 2)) |>
+    dplyr::rename(game_time= 1) |>
     dplyr::mutate(game_time= stringr::str_remove(game_time, pattern = 'Sun, |Mon, |Thu, |See Matchup'),
                   game_time= stringr::str_remove(game_time, pattern = ' See Matchup'),
                   game_time= update(object= lubridate::parse_date_time(game_time, '%B %d, HM'), year= lubridate::year(lubridate::today())),
@@ -62,7 +62,7 @@ picks_consensus<-function(){
                                              game_time > '2022-12-21' & game_time < '2022-12-28' ~ 'week_16',
                                              game_time > '2022-12-28' & game_time < '2023-01-04' ~ 'week_17',
                                              game_time > '2023-01-04' & game_time < '2022-01-11' ~ 'week_18',
-                  )) |> 
+                  )) |>
     dplyr::select(-2)
   consensus<- shark_con |> bind_cols(shark_times)
   return(consensus)
