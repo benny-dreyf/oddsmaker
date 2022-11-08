@@ -20,7 +20,7 @@ nfl_season_schedule<-function(year){
     dplyr::select(week, day, date, time, away= winner_tie, home= loser_tie) |>
     dplyr::group_by(week) |>
     dplyr::group_split() |>
-    purrr::map(mutate, game_num= row_number()) |>
+    purrr::map(dplyr::mutate, game_num= row_number()) |>
     dplyr::bind_rows() |>
     tidyr::unite(col = 'game_time', date, time, sep= " ") |>
     dplyr::mutate(game_time= lubridate::ymd_hm(game_time),
