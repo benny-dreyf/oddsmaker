@@ -11,7 +11,7 @@ picks_consensus<-function(){
   shark_con<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
     rvest::html_elements('table') |>
     rvest::html_table() |>
-    bind_rows(.id= 'game_num') |>
+    dplyr::bind_rows(.id= 'game_num') |>
     tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') |>
     tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') |>
     dplyr::select(game_num, matchup= `See Matchup`, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') |>
