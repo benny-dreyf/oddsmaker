@@ -37,9 +37,9 @@ picks_consensus<-function(){
     rvest::html_elements('div.pick-mobile-date') |>
     rvest::html_text() |>
     tibble::tibble() |>
-    dplyr::group_by(row_number()) |>
+    dplyr::group_by(dplyr::row_number()) |>
     dplyr::group_split() |>
-    purrr::map_df(.f = slice, rep(1, 2)) |>
+    purrr::map_df(.f = dplyr::slice, rep(1, 2)) |>
     dplyr::rename(game_time= 1) |>
     dplyr::mutate(game_time= stringr::str_remove(game_time, pattern = 'Sun, |Mon, |Thu, |See Matchup'),
                   game_time= stringr::str_remove(game_time, pattern = ' See Matchup'),
@@ -64,6 +64,6 @@ picks_consensus<-function(){
                                              game_time > '2023-01-04' & game_time < '2022-01-11' ~ 'week_18',
                   )) |>
     dplyr::select(-2)
-  consensus<- shark_con |> bind_cols(shark_times)
+  consensus<- shark_con |> dplyr::bind_cols(shark_times)
   return(consensus)
 }
