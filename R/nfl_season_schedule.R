@@ -2,7 +2,7 @@
 #'
 #' @param year the season you'd like to pull
 #'
-#' @return a tibble containing the full or a portion of the NFL schedule for a particualr season
+#' @return a tibble containing the full or a portion of the NFL schedule for a particular season
 #'
 #' @example None
 #'
