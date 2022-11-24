@@ -1,4 +1,4 @@
-#' After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
+#' After using oddsmaker::picks_consensus to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
 #'
 #' @param dat dataframe or tibble containing public consensus share of bets and game line for a single game for a given week pulled more than once by odds_consensus function from oddsmaker package
 #'
@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-pick-share_plot<- function(dat){
+pick_share_plot<- function(dat){
   colors_list<- c('ARI' = '#97233F', 'ATL' = '#A71930', 'BAL' = '#241773', 'BUF' = '#00338D', 'CAR' = '#0085CA',
                   'CHI' = '#00143F', 'CIN' = '#FB4F14', 'CLE' = '#22150C', 'DAL' = '#B0B7BC', 'DEN' = '#002244',
                   'DET' = '#046EB4', 'GB' = '#24423C', 'HOU' = '#00143F', 'IND' = '#003D79', 'JAC' = '#136677',
