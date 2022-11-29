@@ -30,7 +30,7 @@ pick_share_plot<- function(dat){
                    panel.grid.major.x= ggplot2::element_blank(),
                    legend.key = ggplot2::element_rect(fill = "white")) +
     ggplot2::labs(title= 'Oddsshark % Share of Bet @ the Spread', subtitle= unique(dat[10]), x= 'Oddsshark Site Timestamp', y= '% Share of Bet Volume', color= 'Team') +
-    ggplot2::scale_x_datetime(date_breaks= '12 hours', date_labels = '%m/%d/%y %H:%M') +
+    ggplot2::scale_x_datetime(date_breaks= '12 hours', date_labels = '%m/%d/%y %H') +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(0,1), labels =  scales::label_percent(accuracy= 1)) +
     ggplot2::scale_color_manual(values = colors_list)
   return(z)
