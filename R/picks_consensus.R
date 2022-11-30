@@ -14,7 +14,7 @@ picks_consensus<-function(){
     dplyr::bind_rows(.id= 'game_num') |>
     tidyr::separate(col= 'Spread Consensus', into= c('team', 'spread', 'spread_share'), sep = ' ') |>
     tidyr::separate(col= 'O/U Consensus', into= c('ou', 'ou_target', 'ou_share'), sep = '[ ]+') |>
-    dplyr::select(game_num, matchup= `See Matchup`, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') |>
+    dplyr::select(game_num, matchup= 2, team, spread, spread_share, spread_payout= 'Price...3', ou, ou_target, ou_share, ou_payout= 'Price...5') |>
     tibble::rowid_to_column() |>
     dplyr::mutate(date_pulled= lubridate::now(tzone = 'EST'),
                   team= stringr::str_extract(team, '^([A-Z]{3}|[A-Z]{2})'),
