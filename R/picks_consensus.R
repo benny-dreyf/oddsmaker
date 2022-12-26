@@ -1,13 +1,13 @@
 #' updated version of odds_consensus, scraping oddsmaker 'public conensus picks' site
 #'
-#' @param NULL
+#' @param season denotes the NFL season
 #'
 #' @return a tibble of picks consensus across all games on https://www.oddsshark.com/nfl/consensus-picks at a moment in time
 #'
 #' @example None
 #'
 #' @export
-picks_consensus<-function(){
+picks_consensus<-function(season){
   shark_con<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
     rvest::html_elements('table') |>
     rvest::html_table() |>
@@ -43,7 +43,9 @@ picks_consensus<-function(){
     dplyr::rename(game_time= 1) |>
     dplyr::mutate(game_time= stringr::str_remove(game_time, pattern = 'Sun, |Mon, |Thu, |See Matchup'),
                   game_time= stringr::str_remove(game_time, pattern = ' See Matchup'),
-                  game_time= update(object= lubridate::parse_date_time(game_time, '%B %d, HM'), year= lubridate::year(lubridate::today())),
+                  game_time= lubridate::parse_date_time(game_time, '%B %d, HM'),
+                  game_time= case_when(lubridate::month(game_time) < 3 ~ update(object= game_time, year= season + 1),
+                                       T ~ update(object= game_time, year= season)),
                   week_num= dplyr::case_when(game_time > '2022-09-07' & game_time < '2022-09-14' ~ 'week_1',
                                              game_time > '2022-09-14' & game_time < '2022-09-21' ~ 'week_2',
                                              game_time > '2022-09-21' & game_time < '2022-09-28' ~ 'week_3',
