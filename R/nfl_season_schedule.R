@@ -15,8 +15,10 @@ nfl_season_schedule<-function(year){
     dplyr::bind_rows() |>
     janitor::clean_names(case= 'snake') |>
     dplyr::filter(week != 'Week') |>
-    dplyr::mutate(week= as.numeric(week)) |>
-    dplyr::filter(week >= 10) |>
+    dplyr::mutate(week= case_when(week == 'WildCard' ~ '19',
+                                  T ~ week),
+                  week= as.numeric(week)) |>
+    # dplyr::filter(week >= 10) |>
     dplyr::select(week, day, date, time, away= winner_tie, home= loser_tie) |>
     dplyr::group_by(week) |>
     dplyr::group_split() |>
@@ -30,5 +32,4 @@ nfl_season_schedule<-function(year){
     dplyr::left_join(readr::read_csv('team_abbrev_match.csv'), by= 'team') |>
     dplyr::rename(team_abbrev= abrev) |>
     dplyr::select(week, day, game_time, game_num, team, team_abbrev, home_away)
-  return(sched)
 }
