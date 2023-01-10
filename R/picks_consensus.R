@@ -63,7 +63,11 @@ picks_consensus<-function(season){
                                              game_time > '2022-12-14' & game_time < '2022-12-21' ~ 'week_15',
                                              game_time > '2022-12-21' & game_time < '2022-12-28' ~ 'week_16',
                                              game_time > '2022-12-28' & game_time < '2023-01-04' ~ 'week_17',
-                                             game_time > '2023-01-04' & game_time < '2022-01-11' ~ 'week_18',
+                                             game_time > '2023-01-04' & game_time < '2023-01-11' ~ 'week_18',
+                                             game_time > '2023-01-11' & game_time < '2023-01-18' ~ 'week_19',
+                                             game_time > '2023-01-18' & game_time < '2023-01-25' ~ 'week_20',
+                                             game_time > '2023-01-25' & game_time < '2023-02-01' ~ 'week_21',
+                                             game_time > '2023-02-01' & game_time < '2023-02-08' ~ 'week_22',
                   )) |>
     dplyr::select(-2)
   consensus<- shark_con |> dplyr::bind_cols(shark_times)
