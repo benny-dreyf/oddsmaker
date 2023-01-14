@@ -4,10 +4,10 @@
 \alias{picks_consensus}
 \title{updated version of odds_consensus, scraping oddsmaker 'public conensus picks' site}
 \usage{
-picks_consensus()
+picks_consensus(season)
 }
 \arguments{
-\item{NULL}{}
+\item{season}{denotes the NFL season}
 }
 \value{
 a tibble of picks consensus across all games on https://www.oddsshark.com/nfl/consensus-picks at a moment in time
