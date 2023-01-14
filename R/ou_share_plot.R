@@ -1,8 +1,8 @@
-#' After using oddsmaker::picks_consensus to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
+#' After using oddsmaker::picks_consensus to scrape data and you've compiled it into a dataframe, you can plot a time-series of over-unders vs. share for each game using this function
 #'
 #' @param dat dataframe or tibble containing public consensus share of bets and game line for a single game for a given week pulled more than once by odds_consensus function from oddsmaker package
 #'
-#' @return a times-series chart showing public consensus and lines movement
+#' @return a times-series chart showing public consensus on over-unders and line movement
 #'
 #' @example None
 #'
@@ -10,7 +10,7 @@
 #'
 ou_share_plot<- function(dat){
   z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= date_pulled, y= ou_share,
-                                                     color= ou, group= ou)) + 
+                                                     color= ou, group= ou)) +
     ggplot2::geom_line() +
     ggplot2::geom_text(ggplot2::aes(label= ou_target),  size= 3.5, show.legend = F) +
     ggplot2::theme(panel.background = ggplot2::element_rect(fill= 'white'),
