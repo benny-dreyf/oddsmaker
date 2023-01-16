@@ -16,6 +16,7 @@ nfl_season_schedule<-function(year){
     janitor::clean_names(case= 'snake') |>
     dplyr::filter(week != 'Week') |>
     dplyr::mutate(week= case_when(week == 'WildCard' ~ '19',
+                                  week == 'Division' ~ '20'
                                   T ~ week),
                   week= as.numeric(week)) |>
     # dplyr::filter(week >= 10) |>
