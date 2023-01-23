@@ -17,6 +17,7 @@ nfl_season_schedule<-function(year){
     dplyr::filter(week != 'Week') |>
     dplyr::mutate(week= case_when(week == 'WildCard' ~ '19',
                                   week == 'Division' ~ '20',
+                                  week == 'ConfChamp' ~ '21',
                                   T ~ week),
                   week= as.numeric(week)) |>
     # dplyr::filter(week >= 10) |>
