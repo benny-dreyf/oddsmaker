@@ -19,17 +19,19 @@ pick_share_plot<- function(dat){
   colors_list<- colors_list[unique(dat$team)]
   z<- ggplot2::ggplot(data = dat, mapping = ggplot2::aes(x= date_pulled, y= spread_share,
                                                          color= team, group= team)) +
-    ggplot2::geom_line() +
+    ggplot2::geom_line(size= 1) +
     ggplot2::geom_text(ggplot2::aes(label= spread),  size= 3.5, show.legend = F) +
     ggplot2::theme(panel.background = ggplot2::element_rect(fill= 'white'),
                    title = ggplot2::element_text(size= 11, face = 'bold'),
                    axis.text = ggplot2::element_text(size= 10, colour = 'black'),
                    axis.text.x = ggplot2::element_text(angle = 90, size = 8),
                    axis.title.x = ggplot2::element_text(size = 10, vjust = -1.5),
-                   panel.grid.major.y= ggplot2::element_line(color= 'grey'),
+                   panel.grid.major.y= ggplot2::element_line(color= '#404040'),
                    panel.grid.major.x= ggplot2::element_blank(),
+                   axis.ticks = ggplot2::element_blank(),
                    legend.key = ggplot2::element_rect(fill = "white")) +
-    ggplot2::labs(title= 'Oddsshark % Share of Bet @ the Spread', subtitle= unique(dat[9]), x= 'Oddsshark Site Timestamp', y= '% Share of Bet Volume', color= 'Team') +
+    ggplot2::labs(title= 'Oddsshark % Share of Bets @ the Spread', subtitle= unique(dat[10]), x= 'Datetime of Data Pull',
+                  y= '% Share of Bet Volume', color= 'Team') +
     ggplot2::scale_x_datetime(date_breaks= '12 hours', date_labels = '%m/%d/%y %H') +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, .1), limits= c(0,1), labels =  scales::label_percent(accuracy= 1)) +
     ggplot2::scale_color_manual(values = colors_list)
