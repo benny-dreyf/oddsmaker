@@ -14,10 +14,10 @@ nfl_season_schedule<-function(year){
     rvest::html_table() |>
     dplyr::bind_rows() |>
     janitor::clean_names(case= 'snake') |>
-    dplyr::filter(week != 'Week') |>
+    dplyr::filter(week != 'Week' & date != 'Playoffs') |>
     dplyr::mutate(week= case_when(week == 'WildCard' ~ '19',
                                   week == 'Division' ~ '20',
-                                  week == 'ConfChamp' ~ '21',
+                                  week == 'ConfChamp' & date == '2023-01-29' ~ '21',
                                   week == 'ConfChamp' & date == '2023-02-12' ~ '22',
                                   T ~ week),
                   week= as.numeric(week)) |>
