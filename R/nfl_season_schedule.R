@@ -17,8 +17,8 @@ nfl_season_schedule<-function(year){
     dplyr::filter(week != 'Week' & date != 'Playoffs') |>
     dplyr::mutate(week= case_when(week == 'WildCard' ~ '19',
                                   week == 'Division' ~ '20',
-                                  week == 'ConfChamp' & date == '2023-01-29' ~ '21',
-                                  week == 'ConfChamp' & date == '2023-02-12' ~ '22',
+                                  week == 'ConfChamp' ~ '21',
+                                  week == 'SuperBowl' ~ '22',
                                   T ~ week),
                   week= as.numeric(week)) |>
     # dplyr::filter(week >= 10) |>
