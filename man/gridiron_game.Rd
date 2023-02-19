@@ -4,13 +4,17 @@
 \alias{gridiron_game}
 \title{After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function}
 \usage{
-gridiron_game(dat)
+gridiron_game(dataset, week_no, game_no)
 }
 \arguments{
+\item{week_no}{week of nfl season to plot}
+
+\item{game_no}{game of nfl week to plot}
+
 \item{dat}{dataframe or tibble containing public consensus share of bets and game line for a single game for a given week pulled more than once by odds_consensus function from oddsmaker package}
 }
 \value{
-a times-series chart showing public consensus and lines movement
+a times-series chart showing public consensus and lines movement for one single nfl game during a given week
 }
 \description{
 After using oddsmakr:odds to scrape data and you've compiled it into a dataframe, you can plot a time-series of spreads vs. share for each team by game using this function
