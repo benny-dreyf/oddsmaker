@@ -67,7 +67,6 @@ picks_consensus<-function(season){
                                              game_time > '2023-01-11' & game_time < '2023-01-18' ~ 'week_19',
                                              game_time > '2023-01-18' & game_time < '2023-01-25' ~ 'week_20',
                                              game_time > '2023-01-25' & game_time < '2023-02-01' ~ 'week_21',
-                                             # game_time > '2023-02-01' & game_time < '2023-02-08' ~ 'week_22',
                                              game_time > '2023-02-08' & game_time < '2023-02-15' ~ 'week_22',
                   )) |>
     dplyr::select(-2)
