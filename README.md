@@ -86,10 +86,9 @@ And we can do the same for the over-under:
 master |> 
   oddsmaker::gridiron_ou(week_no = 20)
   
-![oddsshark Divisional Round Spread consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/div-rd_2022-spread.png)
-  
 ```
 
-Or you can use the app, "app.R" script. 
-  
-  
+![oddsshark Divisional Round Over-Under consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/div-rd_2022_ou.jpeg)
+
+Or you can use the app, "app.R" script.
+
