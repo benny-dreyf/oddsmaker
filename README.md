@@ -1,89 +1,93 @@
-# Oddsmaker: Using Data to Inform Your Weekly Picks
+# Oddsmaker: A Data Informed Approach Betting American Football
 
-This is a tool to use public betting consensus to find the strongest opportunities to "fade the public."
+`oddsmaker` is a set of functions that enables the collection, tracking, and analysis of the public betting consensus for individual NFL game spreads and over-unders.
 
 ### What is public consensus and how can it be used?
 
-> From the website **oddsshark.com:** "The NFL consensus is ... the percentage of the general public betting on each side of a matchup or total. You can bet with or against the public. When you bet against the public, it is called 'fading' the public." 
-
-"the house always wins" always applies in sports betting because of the vigorish, however, if we assume that the majority of the betting public is generally wrong, what can we use to better inform our picks?
-  * Changes in the spread over-time
-  * Changes in the public pick consensus over-time
-
+> From the website **oddsshark.com:** "consensus is ... the percentage of the general public betting on each side of a matchup or total. You can bet with or against the public. When you bet against the public, it is called 'fading' the public." 
 ###### Source: https://www.oddsshark.com/nfl/consensus-picks
 
-The NFL "Pick Consensus" page on [Oddsshark](http://oddsshark.com) shows a single point-in-time 'snapshot' of where highest share of bets are going for any given game. 
+The inverse of the popular gambling adage "the house always wins," would probably be something like "the public always loses." While this isn't strictly true (or a good analogy), it prompts the question: can the public consensus picks be used to better inform our own? The purpose of the `oddsmaker` package is to provide trended spread, over-under, and the respective consensus data to help us make better informed picks each week of the NFL season.
 
+### How do we create our data set?
+
+The NFL "Pick Consensus" page on [Oddsshark](http://oddsshark.com) shows a single point-in-time "snapshot" of the share of bets are going for either side for any given game. 
 
 ![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl-2022_oddsshark.png)
 
-
 This is helpful, but variation over time could add important context, such as:
   - Where did the line open?
-  - How has public consensus changed over time? 
+  - Has public consensus changed over time? 
   - What is the relationship between % share of bets and the line?
 
-All of these are still observational but more data coudl help us make better decisions. 
+All of these are still observational but more data could help us make better decisions. 
 
 ### How does it work?
 
-Each day (or multiple times a day), you first need to run the `odds_consensus` script, detailing the 'number of games (`num_games`) and 'week number' (`week_num`) on the NFL calendar. 
+Each day (or multiple times a day), run both the `odds_consensus` and  `nfl_season_schedule` scripts, providing the required arguments for each, respectively. When done, check to ensure that the dates and times in each table match and then join the data sets. Keep in-mind that the weekly "flex" game will create the need for a manual fix in your final data set if one site updates the date/time and the other does not.
+
+
 
 ```
-oddsshark<- oddsmaker::odds_consensus(week_num = 22, num_games = 1) 
-oddsshark %>% print()
-time<- lubridate::now()
-week<- '22'
-oddsshark %>% 
-  readr::write_csv(path= glue::glue('/Users/BenDreyfuss/oddsmaker/playoffs_2022/week_{week}/oddsshark_{time}.csv'))
+picks_con<- oddsmaker::picks_consensus(season = 2022)
+picks_con |> glimpse()
 
+sched_2022 <- oddsmaker::nfl_season_schedule(year = 2022)
+sched_2022 |> glimpse()
+
+final<- sched_2022 |> 
+  mutate(game_time= as_datetime(format(game_time, format="%Y-%m-%d %I:%M:%S"))) |>  
+  inner_join(picks_con, by= c('team_abbrev' = 'team', 'home_away', 'game_time')) |> 
+  select(-c(10,18), team_full= team, team= team_abbrev, game_num = game_num.x) |> 
+  mutate(matchup= str_replace(matchup, pattern = 'VS', replacement = '@')) |> 
+  select(date_pulled, everything()) 
+
+final |> glimpse()
 ```
 
 After you've run the code several times, you'll now have enough data to compile a data set:
 
 ```
+# create a csv for the most recent join
+time<- lubridate::now()
+final |> print(n=Inf)
+final |> write_csv(glue::glue('season_2022/oddsshark_{time}.csv'))
+
 # create a list of all of the files you've run/created over time
-files<- paste(glue::glue('playoffs_2022/week_{week}/'), list.files(glue::glue('playoffs_2022/week_{week}')), sep= '')
+files<- paste('season_2023/', list.files('season_2023'), sep = "")
 files
 
-# use map to compile everything into a single dataframe
-week_22<- map(.x = files, .f= read_csv) %>% 
-  map(mutate_all, as.character) %>% 
-  bind_rows(.id= 'id') %>% 
-  mutate(date_pulled= lubridate::as_date(lubridate::parse_date_time(date_pulled, orders = c('%m/%d/%y', '%y-%m-%d'))),
-         team= str_extract(team, '^([A-Z]{3}|[A-Z]{2})')) %>% 
-  mutate_at(vars(4,7:9, 11:13), as.numeric) %>% 
-  select(date_pulled, week, game_num, everything())
+# combine all files into a single master data frame object
+master<-map(.x = files, .f= read_csv) |>  
+  bind_rows(.id= 'id') |> 
+  mutate(team= str_extract(team, '^([A-Z]{3}|[A-Z]{2})')) |> 
+  arrange(game_num)
 
-glimpse(week_22)
+# write that data frame to a master csv
+master |> write_csv('master_2022.csv')
+
+glimpse(master)
 
 ```
 
 With data compiled in a single dataframe, we can now build a timeseries of our data:
 
 ```
-oddsmaker::gridiron_all(week_22)
+master |> 
+  oddsmaker::gridiron_all(week_no = 20)
+  
 ```
 
-![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022.png)
+![oddsshark Divisional Round Spread consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/week-12_2022-spread.png)
 
 And we can do the same for the over-under:
 
 ```
-oddsmaker::gridiron_ou(week_22)
+master |> 
+  oddsmaker::gridiron_ou(week_no = 20)
+  
 ```
 
-![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl_2022_ou.png)
-
-(Note that the visual for the over/under needs some fine-tuning, such as the addition of team colors, and fixing the `subtitle` label, but the underlying data and how it is depicted is accurate.)
-
-This can be done to showcase all games from a bigger week, see Week 17 below as an example, using a final file of stored game data for that week:
-
-```
-read_csv('week17_2021.csv') %>% 
-  oddsmaker::gridiron_all()
-```
-![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/week17_2021.png)
-
+Or you can use the app, "app.R" script. 
   
   
