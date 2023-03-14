@@ -13,7 +13,7 @@ The inverse of the popular gambling adage "the house always wins," would probabl
 
 The NFL "Pick Consensus" page on [Oddsshark](http://oddsshark.com) shows a single point-in-time "snapshot" of the share of bets are going for either side for any given game. 
 
-![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/super-bowl-2022_oddsshark.png)
+![oddsshark super bowl 2022 consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/pics/super-bowl-2022_oddsshark.png)
 
 This is helpful, but variation over time could add important context, such as:
   - Where did the line open?
@@ -78,7 +78,7 @@ master |>
   
 ```
 
-![oddsshark Divisional Round Spread consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/div-rd_2022-spread.png)
+![oddsshark Divisional Round Spread consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/pics/div-rd_2022-spread.png)
 
 And we can do the same for the over-under:
 
@@ -88,7 +88,7 @@ master |>
   
 ```
 
-![oddsshark Divisional Round Over-Under consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/div-rd_2022-ou.png)
+![oddsshark Divisional Round Over-Under consensus](https://github.com/benny-dreyf/oddsmaker/blob/master/pics/div-rd_2022-ou.png)
 
 Or you can use the app, "app.R" script.
 
