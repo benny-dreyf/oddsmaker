@@ -25,7 +25,7 @@ rvest::read_html(nfl_year) |>
                                 T ~ week),
                 week= as.numeric(week)) |>
   dplyr::select(week, day, date, time, away= winner_tie, home= loser_tie) |>
-  mutate(year= season_year) |>
+  dplyr::mutate(year= season_year) |>
   dplyr::group_by(week) |>
   dplyr::group_split() |>
   purrr::map(dplyr::mutate, game_num= dplyr::row_number()) |>
