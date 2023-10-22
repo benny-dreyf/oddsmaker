@@ -4,7 +4,7 @@
 \alias{nfl_season_schedule}
 \title{scrapes season schedule from pro-football-reference.com}
 \usage{
-nfl_season_schedule(year)
+nfl_season_schedule(season_year)
 }
 \arguments{
 \item{year}{the season you'd like to pull}
