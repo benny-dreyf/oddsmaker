@@ -29,47 +29,33 @@ picks_consensus<-function(season){
                   spread= as.numeric(spread),
                   ou_target= as.numeric(ou_target),
                   ou_payout = dplyr::case_when(as.double(ou_payout) > 0 ~ as.double(ou_payout) * -1,
-                                               TRUE ~ as.double(ou_payout))) |>
+                                               TRUE ~ as.double(ou_payout)),
+                  week= dplyr::case_when(lubridate::today() >= '2024-09-03' & lubridate::today() < '2024-09-10' ~ 1,
+                                             lubridate::today() >= '2024-09-10' & lubridate::today() < '2024-09-17' ~ 2,
+                                             lubridate::today() >= '2024-09-17' & lubridate::today() < '2024-09-24' ~ 3,
+                                             lubridate::today() >= '2024-09-24' & lubridate::today() < '2024-10-01' ~ 4,
+                                             lubridate::today() >= '2024-10-01' & lubridate::today() < '2024-10-08' ~ 5,
+                                             lubridate::today() >= '2024-10-08' & lubridate::today() < '2024-10-15' ~ 6,
+                                             lubridate::today() >= '2024-10-15' & lubridate::today() < '2024-10-22' ~ 7,
+                                             lubridate::today() >= '2024-10-22' & lubridate::today() < '2024-10-29' ~ 8,
+                                             lubridate::today() >= '2024-10-29' & lubridate::today() < '2024-11-05' ~ 9,
+                                             lubridate::today() >= '2024-11-05' & lubridate::today() < '2024-11-12' ~ 10,
+                                             lubridate::today() >= '2024-11-12' & lubridate::today() < '2024-11-19' ~ 11,
+                                             lubridate::today() >= '2024-11-19' & lubridate::today() < '2024-11-26' ~ 12,
+                                             lubridate::today() >= '2024-11-26' & lubridate::today() < '2024-12-03' ~ 13,
+                                             lubridate::today() >= '2024-12-03' & lubridate::today() < '2024-12-10' ~ 14,
+                                             lubridate::today() >= '2024-12-10' & lubridate::today() < '2024-12-17' ~ 15,
+                                             lubridate::today() >= '2024-12-17' & lubridate::today() < '2024-12-24' ~ 16,
+                                             lubridate::today() >= '2024-12-24' & lubridate::today() < '2024-12-31' ~ 17,
+                                             lubridate::today() >= '2024-12-31' & lubridate::today() < '2025-01-07' ~ 18,
+                                             lubridate::today() >= '2025-01-07' & lubridate::today() < '2025-01-14' ~ 19,
+                                             lubridate::today() >= '2025-01-14' & lubridate::today() < '2025-01-21' ~ 20,
+                                             lubridate::today() >= '2025-01-21' & lubridate::today() < '2025-01-28' ~ 21,
+                                             lubridate::today() >= '2025-01-28' & lubridate::today() < '2025-02-12' ~ 22,
+                  )) |>
     dplyr::select(-rowid) |>
     dplyr::select(date_pulled, matchup,  game_num, team, home_away, dplyr::everything()) |>
     dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0))
-  shark_times<-rvest::read_html('https://www.oddsshark.com/nfl/consensus-picks') |>
-    rvest::html_elements('div.pick-mobile-date') |>
-    rvest::html_text() |>
-    tibble::tibble() |>
-    dplyr::group_by(dplyr::row_number()) |>
-    dplyr::group_split() |>
-    purrr::map_df(.f = dplyr::slice, rep(1, 2)) |>
-    dplyr::rename(game_time= 1) |>
-    dplyr::mutate(game_time= stringr::str_remove(game_time, pattern = 'Sun, |Mon, |Thu, |See Matchup'),
-                  game_time= stringr::str_remove(game_time, pattern = ' See Matchup'),
-                  game_time= lubridate::parse_date_time(game_time, '%B %d, HM'),
-                  game_time= case_when(lubridate::month(game_time) < 3 ~ update(object= game_time, year= season + 1),
-                                       T ~ update(object= game_time, year= season)),
-                  week_num= dplyr::case_when(game_time > '2022-09-07' & game_time < '2022-09-14' ~ 'week_1',
-                                             game_time > '2022-09-14' & game_time < '2022-09-21' ~ 'week_2',
-                                             game_time > '2022-09-21' & game_time < '2022-09-28' ~ 'week_3',
-                                             game_time > '2022-09-28' & game_time < '2022-10-05' ~ 'week_4',
-                                             game_time > '2022-10-05' & game_time < '2022-10-12' ~ 'week_5',
-                                             game_time > '2022-10-12' & game_time < '2022-10-19' ~ 'week_6',
-                                             game_time > '2022-10-19' & game_time < '2022-10-26' ~ 'week_7',
-                                             game_time > '2022-10-26' & game_time < '2022-11-02' ~ 'week_8',
-                                             game_time > '2022-11-02' & game_time < '2022-11-09' ~ 'week_9',
-                                             game_time > '2022-11-09' & game_time < '2022-11-16' ~ 'week_10',
-                                             game_time > '2022-11-16' & game_time < '2022-11-23' ~ 'week_11',
-                                             game_time > '2022-11-23' & game_time < '2022-11-30' ~ 'week_12',
-                                             game_time > '2022-11-30' & game_time < '2022-12-07' ~ 'week_13',
-                                             game_time > '2022-12-07' & game_time < '2022-12-14' ~ 'week_14',
-                                             game_time > '2022-12-14' & game_time < '2022-12-21' ~ 'week_15',
-                                             game_time > '2022-12-21' & game_time < '2022-12-28' ~ 'week_16',
-                                             game_time > '2022-12-28' & game_time < '2023-01-04' ~ 'week_17',
-                                             game_time > '2023-01-04' & game_time < '2023-01-11' ~ 'week_18',
-                                             game_time > '2023-01-11' & game_time < '2023-01-18' ~ 'week_19',
-                                             game_time > '2023-01-18' & game_time < '2023-01-25' ~ 'week_20',
-                                             game_time > '2023-01-25' & game_time < '2023-02-01' ~ 'week_21',
-                                             game_time > '2023-02-08' & game_time < '2023-02-15' ~ 'week_22',
-                  )) |>
-    dplyr::select(-2)
-  consensus<- shark_con |> dplyr::bind_cols(shark_times)
+  consensus<- shark_con
   return(consensus)
 }
