@@ -50,8 +50,8 @@ picks_consensus<-function(season){
                                              lubridate::today() >= '2024-12-31' & lubridate::today() < '2025-01-07' ~ 18,
                                              lubridate::today() >= '2025-01-07' & lubridate::today() < '2025-01-14' ~ 19,
                                              lubridate::today() >= '2025-01-14' & lubridate::today() < '2025-01-21' ~ 20,
-                                             lubridate::today() >= '2025-01-21' & lubridate::today() < '2025-01-28' ~ 21,
-                                             lubridate::today() >= '2025-01-28' & lubridate::today() < '2025-02-12' ~ 22,
+                                             lubridate::today() >= '2025-01-21' & lubridate::today() < '2025-01-27' ~ 21,
+                                             lubridate::today() >= '2025-01-27' & lubridate::today() < '2025-02-12' ~ 22,
                   )) |>
     dplyr::select(-rowid) |>
     dplyr::select(date_pulled, matchup,  game_num, team, home_away, dplyr::everything()) |>
